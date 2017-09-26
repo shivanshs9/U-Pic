@@ -1,0 +1,5 @@
+- Animations
+- Cookies/sessions
+- File uploads
+- Offline support
+- Efficient server deployment
