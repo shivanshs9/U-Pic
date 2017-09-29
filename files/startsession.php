@@ -1,6 +1,5 @@
 <?php
-  session_start();
-
+  if (session_status() != PHP_SESSION_ACTIVE) session_start();
   // If the session vars aren't set, try to set them with a cookie
   if (!isset($_SESSION['user_id'])) {
     if (isset($_COOKIE['user_id'])) {

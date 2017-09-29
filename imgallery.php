@@ -1,8 +1,5 @@
 <?php
-require_once('files/appvars.php');
-$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-  or die("<p class = 'error'>Couldn't Connect to the MYSQLi Server/Database...</p>");
-
+require_once('files/db.php');
 class ImgGallery {
 
   //=======================================//
@@ -73,8 +70,9 @@ class ImgGallery {
         $thumb=$this->getImageThumbnail($img);
         $maxsize=$this->getMaxImage($img);
         $imgname=explode("/",$img)[1];
+        global $mysqli;
         $query = "SELECT name, timestamp FROM images WHERE image='$imgname'";
-        $data = mysqli_query($GLOBALS['dbc'], $query);
+        $data = $mysqli->query($query);
         $row = mysqli_fetch_array($data);
         $markup.='<li><a href="'.$maxsize.'" class="lightBox" title="'. $imgname . ' by ' . $row['name'] . ' (' . $row['timestamp'] . ')">
           <img src="'.$thumb.'" alt="'.$imgname.'" />

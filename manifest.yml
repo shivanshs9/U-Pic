@@ -1,0 +1,9 @@
+applications:
+- disk_quota: 512M
+  path: .
+  name: upic
+  instances: 1
+  memory: 256M
+  buildpack: https://github.com/cloudfoundry/php-buildpack.git
+services:
+  - ClearDB

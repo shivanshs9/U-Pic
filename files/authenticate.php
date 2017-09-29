@@ -1,13 +1,12 @@
 <?php
-require_once('appvars.php');
+ob_start();
 require_once('startsession.php');
+require_once('db.php');
 
 if (isset($_SESSION['user_id'])) {
 	$user_id = $_SESSION['user_id'];
-	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-		or die("<p class = 'error'>Couldn't Connect to the MYSQLi Server/Database...</p>");
 	$query = "SELECT * FROM users WHERE sha_id = '$user_id'";
-	$result = mysqli_query($dbc, $query);
+	$result = $mysqli->query($query);
 
 	if (mysqli_num_rows($result) == 1) {
 		$row = mysqli_fetch_array($result);

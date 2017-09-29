@@ -1,6 +1,6 @@
 <?php
 $title = "Home Page";
-$head = "Welcome to Cyber-X-Zone!";
+$head = "Welcome to U-Pic!";
 require_once('files/header.php');
 
 echo '<p>Hello, ' . (isset($_SESSION['user_id']) ? $user_firstname . ' ' . $user_lastname : 'Guest' ). '!</p>';
@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id']))
 	<div id="progress-div"><div id="progress-bar"></div></div>
 	<div id="targetLayer"></div>
 	</form>
-	<div id="loader-icon" style="display:none;"><img src="media/LoaderIcon.gif" /></div>
+	<div id="loader-icon" style="display:none; margin:auto; text-align: center;"><img src="media/LoaderIcon.gif" /></div>
 <?php
 }
 

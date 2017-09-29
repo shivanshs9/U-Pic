@@ -1,1 +1,5 @@
+IBM Bluemix hosted app (Infinite problems):
 http://upic.eu-gb.mybluemix.net
+
+000Webhost app (Works well, as far as I can tell):
+https://u-pic.000webhostapp.com

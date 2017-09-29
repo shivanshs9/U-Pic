@@ -1,8 +1,6 @@
 <?php
 require_once('files/authenticate.php');
-$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-	or die("<p class = 'error'>Couldn't Connect to the MYSQLi Server/Database...</p>");
-$target_dir = "uploads/";
+$target_dir = "./uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -39,9 +37,8 @@ if ($uploadOk == 0) {
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
         echo '</br><img src="'. $target_file .'">';
         $query = "INSERT INTO images (name, image) VALUES ('" . $user_name . "', '" . basename($_FILES["fileToUpload"]["name"]) . "')";
-	    mysqli_query($dbc, $query)
-	    	or die("<p class = 'error'>Error Quering!!!</p>");
-	    mysqli_close($dbc);
+	    $mysqli->query($query)
+	    	or die("<p class = 'error'>Error Quering!</p>");
 	    exit();
     } else {
         echo "Sorry, there was an error uploading your file.";

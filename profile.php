@@ -1,27 +1,27 @@
 <?php
 require_once('files/authenticate.php');
-
 $title = $user_name;
 $head = "Welcome to your Profile, " . $user_firstname . " " . $user_lastname . "!";
 require_once('files/header.php');
 
 if(isset($_POST['personal'])){
-	$firstname = mysqli_real_escape_string($dbc, trim($_POST['firstname']));
-	$lastname = mysqli_real_escape_string($dbc, trim($_POST['lastname']));
-	$current_pass = mysqli_real_escape_string($dbc, trim($_POST['current_pass']));
+	$firstname = $mysqli->real_escape_string(trim($_POST['firstname']));
+	$lastname = $mysqli->real_escape_string(trim($_POST['lastname']));
+	$current_pass = $mysqli->real_escape_string(trim($_POST['current_pass']));
 	
 	if(!empty($firstname) && !empty($lastname)){
 		if(!empty($current_pass)){
 
 			$query = "SELECT * FROM users WHERE password = SHA('$current_pass') AND sha_id = '$user_id'";
-			$data = mysqli_query($dbc, $query)
+			$data = $mysqli->query($query)
 				or die("<p class = 'error'>Error Querying</p>");
 	        if(mysqli_num_rows($data) == 1) {
 				$query1 = "UPDATE users SET " . (!empty($firstname) ? "firstname = '$firstname'" : "") .
 						(!empty($firstname) && !empty($lastname) ? ", " : "") .
 						(!empty($lastname) ? "lastname = '$lastname'" : "") . "WHERE sha_id = '$user_id'";
-				$result = mysqli_query($dbc, $query1)
+				$result = $mysqli->query($query1)
 					or die("<p class = 'error'>Error Updating...</p>");
+				$mysqli->close();
 				header('Refresh: 0; url = profile.php');
 			}
 			else{
@@ -35,10 +35,10 @@ if(isset($_POST['personal'])){
 }
 if(isset($_POST['security'])){
 	$change_pass = false;
-	$email = mysqli_real_escape_string($dbc, trim($_POST['email']));
-	$pass1 = mysqli_real_escape_string($dbc, trim($_POST['pass1']));
-	$pass2 = mysqli_real_escape_string($dbc, trim($_POST['pass2']));
-	$current_pass = mysqli_real_escape_string($dbc, trim($_POST['current_pass']));
+	$email = $mysqli->real_escape_string(trim($_POST['email']));
+	$pass1 = $mysqli->real_escape_string(trim($_POST['pass1']));
+	$pass2 = $mysqli->real_escape_string(trim($_POST['pass2']));
+	$current_pass = $mysqli->real_escape_string(trim($_POST['current_pass']));
 
 	if(!empty($current_pass)){
 		if (!empty($pass1) && !empty($pass1))
@@ -50,13 +50,14 @@ if(isset($_POST['security'])){
 			}
 		}
 		$query = "SELECT * FROM users WHERE password = SHA('$current_pass') AND sha_id = '$user_id'";
-		$data = mysqli_query($dbc, $query)
+		$data = $mysqli->query($query)
 			or die("<p class = 'error'>Error Querying</p>");
         if(mysqli_num_rows($data) == 1) {
 			$query = "UPDATE users SET " . (!empty($email) ? "email = '$email'" : "") . (!empty($email) && $change_pass ? ", " : "") .
 			($change_pass == true ? "password = SHA('$pass1')" : "") . " WHERE sha_id = '$user_id'";
-			$result = mysqli_query($dbc, $query)
+			$result = $mysqli->query($query)
 				or die("<p class = 'error'>Error Querying</p>");
+			$mysqli->close();
 			header('Refresh: 0; url = profile.php');
 		}
 		else
@@ -68,7 +69,6 @@ if(isset($_POST['security'])){
 		echo "<p class = 'error'>You need to type your current Password to confirm your settings!</p>";
 	}
 }
-mysqli_close($dbc);
 ?>
 Here, you can edit your Profile in an easy-to-use way.
 <p />
